@@ -1,3 +1,4 @@
+//peerapart namnuch 6601012630050
 let clicked1 = [];
 let clicked2 = [];
 let board = [];

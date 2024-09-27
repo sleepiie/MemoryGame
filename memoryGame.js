@@ -3,18 +3,37 @@ let clicked1 = [];
 let clicked2 = [];
 let board = [];
 let paired = [];
+let difficulty = 'easy';
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background('white');
-  let numbers = [0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9];
-  for(let i = 0; i<4; i++){
+  let y;
+  if(difficulty == 'easy'){
+    y = 2;
+  }
+  else if(difficulty == 'medium'){
+    y = 4;
+  }
+  else{
+    y = 8;
+  }
+  
+  let numbers = [0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,9];
+  console.log(numbers)
+  for(let i = 0; i<y; i++){
     board.push([]);
     for(let j = 0; j<5; j++){
       const randomNum = random(numbers);
       index = numbers.indexOf(randomNum);
-      numbers.splice(index, 1);
-      board[i].push(randomNum);
+      if(difficulty == 'easy' || difficulty =='medium'){
+        numbers.splice(index, 1);
+        board[i].push(randomNum);
+      } 
+      else{
+        board[i].push(randomNum);
+      }
+      
     }
   }
   console.log(board);
@@ -26,13 +45,25 @@ function draw() {
   textSize(20);
   let text1;
   let text2;
+  let y;
+  if(difficulty == 'easy'){
+    y = 2;
+  }
+  else if(difficulty == 'medium'){
+    y = 4
+  }
+  else{
+    y = 8
+  }
   const blockX = floor(windowWidth/5);
-  const blockY = floor(windowHeight/4);
+  const blockY = floor(windowHeight/y);
+  
+  
   for(let i=1; i<5; i++){
     line(i*windowWidth/5, 0, i*windowWidth/5, windowHeight);
   }
-  for(let i=1; i<4; i++){
-    line(0, i*windowHeight/4, windowWidth, i*windowHeight/4);
+  for(let i=1; i<y; i++){
+    line(0, i*windowHeight/y, windowWidth, i*windowHeight/y);
   }
   if(clicked1.length!=0){
     text1 = board[clicked1[0]][clicked1[1]];
@@ -54,8 +85,18 @@ function draw() {
 
 function mouseClicked(){
   if(clicked2.length == 0){
+    let y;
+    if(difficulty == 'easy'){
+      y = 2;
+    }
+    else if(difficulty == 'medium'){
+      y = 4
+    }
+    else{
+      y = 8
+    }
     const blockX = floor(windowWidth/5);
-    const blockY = floor(windowHeight/4);
+    const blockY = floor(windowHeight/y);
     const arrayX = floor(mouseX/blockX);
     const arrayY = floor(mouseY/blockY);
     if(clicked1.length == 0){clicked1.push(arrayY,arrayX);}
@@ -70,4 +111,5 @@ function mouseClicked(){
     console.log(clicked1);
     console.log(clicked2);
   }
+      
 }

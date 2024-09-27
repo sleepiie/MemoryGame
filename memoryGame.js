@@ -3,23 +3,26 @@ let clicked1 = [];
 let clicked2 = [];
 let board = [];
 let paired = [];
-let difficulty = 'easy';
+let difficulty = 'medium';
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background('white');
   let y;
+  let numbers = [];
   if(difficulty == 'easy'){
     y = 2;
+    numbers = [1,1,2,2,3,3,4,4,5,5]
   }
   else if(difficulty == 'medium'){
     y = 4;
+    numbers = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5];
   }
   else{
     y = 8;
+    numbers = [0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,9];
   }
   
-  let numbers = [0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,9];
   console.log(numbers)
   for(let i = 0; i<y; i++){
     board.push([]);
@@ -75,11 +78,9 @@ function draw() {
     if(text1 == text2){paired.push([clicked1[0],clicked1[1],clicked2[0],clicked2[1]]);}
   }
   paired.map((axis) => {
-    fill('green');
     const numshow = board[axis[0]][axis[1]].toString();
     text(numshow, axis[1]*blockX+blockX/2, axis[0]*blockY+blockY/2);
     text(numshow, axis[3]*blockX+blockX/2, axis[2]*blockY+blockY/2);
-    noFill();
   });
 }
 

@@ -8,12 +8,12 @@ let board = [];
 let paired = [];
 let difficulty = 'medium';
 let Hint;
+let player1Turn = true;
 let y;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight+ 100);
   background('white');
-
   let numbers = [];
   if(difficulty == 'easy'){
     y = 2;
@@ -42,10 +42,12 @@ function setup() {
         board[i].push(randomNum);
       }
       
+      
     }
   }
   console.log(board);
 }
+
 
 function draw() {
   rect(0,0,windowWidth,windowHeight);
@@ -65,6 +67,12 @@ function draw() {
   const blockX = floor(windowWidth/5);
   const blockY = floor(windowHeight/y);
   
+  if(player1Turn){
+    console.log("player 1's Turn")
+  }
+  else{
+    console.log("player 2's Turn")
+  }
   
   for(let i=1; i<5; i++){
     line(i*windowWidth/5, 0, i*windowWidth/5, windowHeight);
@@ -72,6 +80,9 @@ function draw() {
   for(let i=1; i<y; i++){
     line(0, i*windowHeight/y, windowWidth, i*windowHeight/y);
   }
+  
+   
+
   if(clicked1.length!=0){
     text1 = board[clicked1[0]][clicked1[1]];
     hint = findHint();
@@ -85,7 +96,6 @@ function draw() {
   if(clicked2.length!=0){
     text2 = board[clicked2[0]][clicked2[1]];
     let gap = -10;
-
     for(i = 1; i<=text2 ; i++){
       line(clicked2[1]*blockX+blockX/2+gap, clicked2[0]*blockY+blockY/2-20, clicked2[1]*blockX+blockX/2+gap, clicked2[0]*blockY+blockY/2+20);
       gap += 7;
@@ -101,6 +111,7 @@ function draw() {
       gap += 7;
     }
   });
+
 }
 
 function mouseClicked(){
@@ -124,7 +135,10 @@ function mouseClicked(){
     if(clicked1.length == 0){clicked1.push(arrayY,arrayX);}
     else{
       clicked2.push(arrayY2,arrayX2);
+      ChangeTurn()
+      
       setTimeout(() => {
+        
         clicked1 = [];
         clicked2 = [];
         console.log("clicked reset")
@@ -150,4 +164,13 @@ function findHint(){
     return [hintx , hinty]
   }
   
+}
+
+function ChangeTurn(){
+    if(player1Turn){
+      player1Turn = false;
+    }
+    else{
+      player1Turn = true;
+    }
 }

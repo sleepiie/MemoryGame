@@ -7,11 +7,13 @@ let clicked2 = [];
 let board = [];
 let paired = [];
 let difficulty = 'medium';
+let Hint;
+let y;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background('white');
-  let y;
+
   let numbers = [];
   if(difficulty == 'easy'){
     y = 2;
@@ -51,7 +53,6 @@ function draw() {
   textSize(20);
   let text1;
   let text2;
-  let y;
   if(difficulty == 'easy'){
     y = 2;
   }
@@ -73,7 +74,8 @@ function draw() {
   }
   if(clicked1.length!=0){
     text1 = board[clicked1[0]][clicked1[1]];
-    console.log(text1)
+    hint = findHint();
+    text("Hint : "+hint.toString(), clicked1[1]*blockX+blockX/2, clicked1[0]*blockY+blockY/2 + 50);
     let gap = -10;
     for(i = 1; i<=text1 ; i++){
       line(clicked1[1]*blockX+blockX/2+gap, clicked1[0]*blockY+blockY/2-20, clicked1[1]*blockX+blockX/2+gap, clicked1[0]*blockY+blockY/2+20);
@@ -117,9 +119,11 @@ function mouseClicked(){
     const blockY = floor(windowHeight/y);
     const arrayX = floor(mouseX/blockX);
     const arrayY = floor(mouseY/blockY);
+    const arrayX2 = floor(mouseX/blockX);
+    const arrayY2 = floor(mouseY/blockY);
     if(clicked1.length == 0){clicked1.push(arrayY,arrayX);}
     else{
-      clicked2.push(arrayY,arrayX);
+      clicked2.push(arrayY2,arrayX2);
       setTimeout(() => {
         clicked1 = [];
         clicked2 = [];
@@ -130,4 +134,20 @@ function mouseClicked(){
     console.log(clicked2);
   }
       
+}
+
+function findHint(){
+  if (clicked1.lenght != 0){
+    reveled = board[clicked1[0]][clicked1[1]];
+    for(let i = 0; i<y; i++){
+      for(let j = 0; j<5; j++){
+        if (board[i][j] == reveled && i != clicked1[0] && j != clicked1[1] ){
+          hinty = i - clicked1[0];
+          hintx = j - clicked1[1];
+        }
+      }
+    }
+    return [hintx , hinty]
+  }
+  
 }

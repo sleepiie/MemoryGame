@@ -1,4 +1,7 @@
 //peerapart namnuch 6601012630050
+//multiplayer
+//Hint
+//Timer
 let clicked1 = [];
 let clicked2 = [];
 let board = [];

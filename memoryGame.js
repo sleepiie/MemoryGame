@@ -12,6 +12,7 @@ let player1Turn = true;
 let y;
 let timer = 0;
 let lastTime;
+let devmode = true;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -97,6 +98,17 @@ function draw() {
   
   text("Game time : "+ timer +" seconds", windowWidth/2, windowHeight - 30);
    
+  if(devmode){
+    textSize(15);
+    textAlign(RIGHT, BOTTOM);
+    for(let i = 0; i < y; i++){
+      for(let j = 0; j < 5; j++){
+        let numshow = board[i][j].toString();
+        text(numshow, j*blockX + blockX-5, i*blockY + blockY-5);
+      }
+    }
+  }
+
 
   if(clicked1.length!=0){
     text1 = board[clicked1[0]][clicked1[1]];

@@ -10,6 +10,8 @@ let difficulty = 'medium';
 let Hint;
 let player1Turn = true;
 let y;
+let timer = 0;
+let lastTime;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -28,6 +30,7 @@ function setup() {
     numbers = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,9,10,10,10,10];
   }
   
+  lastTime = millis();
   console.log(numbers)
   for(let i = 0; i<y; i++){
     board.push([]);
@@ -50,12 +53,18 @@ function setup() {
 
 
 function draw() {
+   if (millis() - lastTime >= 1000) {
+    timer = timer + 1;
+    lastTime = millis();
+  }
   background('white');  
   rect(0,0,windowWidth,windowHeight -100);
   textAlign(CENTER, CENTER);
   textSize(20);
   let text1;
   let text2;
+  
+  
   if(difficulty == 'easy'){
     y = 2;
   }
@@ -84,8 +93,9 @@ function draw() {
  
   textSize(24);
   textAlign(CENTER, CENTER);
-  text(player1Turn ? "Player 1's Turn" : "Player 2's Turn", windowWidth/2, windowHeight - 50);
+  text(player1Turn ? "Player 1's Turn" : "Player 2's Turn", windowWidth/2, windowHeight - 70);
   
+  text("Game time : "+ timer +" seconds", windowWidth/2, windowHeight - 30);
    
 
   if(clicked1.length!=0){

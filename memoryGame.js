@@ -109,10 +109,11 @@ function draw() {
     }
   }
 
-
+  textSize(20);
   if(clicked1.length!=0){
     text1 = board[clicked1[0]][clicked1[1]];
     hint = findHint();
+    textAlign(CENTER, CENTER);
     text("Hint : "+hint.toString(), clicked1[1]*blockX+blockX/2, clicked1[0]*blockY+blockY/2 + 50);
     let gap = -10;
     for(i = 1; i<=text1 ; i++){
@@ -182,9 +183,13 @@ function findHint(){
     reveled = board[clicked1[0]][clicked1[1]];
     for(let i = 0; i<y; i++){
       for(let j = 0; j<5; j++){
-        if (board[i][j] == reveled && i != clicked1[0] && j != clicked1[1] ){
+       let alreadyPaired = paired.some(pair => 
+          (pair[0] === i && pair[1] === j) || (pair[2] === i && pair[3] === j)
+        );
+        if (!alreadyPaired && board[i][j] === reveled && (i !== clicked1[0] || j !== clicked1[1])) {
           hinty = i - clicked1[0];
           hintx = j - clicked1[1];
+          return [hintx, hinty]; 
         }
       }
     }

@@ -12,7 +12,7 @@ let player1Turn = true;
 let y;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight+ 100);
+  createCanvas(windowWidth, windowHeight);
   background('white');
   let numbers = [];
   if(difficulty == 'easy'){
@@ -50,7 +50,8 @@ function setup() {
 
 
 function draw() {
-  rect(0,0,windowWidth,windowHeight);
+  background('white');  
+  rect(0,0,windowWidth,windowHeight -100);
   textAlign(CENTER, CENTER);
   textSize(20);
   let text1;
@@ -65,7 +66,7 @@ function draw() {
     y = 8
   }
   const blockX = floor(windowWidth/5);
-  const blockY = floor(windowHeight/y);
+  const blockY = floor((windowHeight-100)/y);
   
   if(player1Turn){
     console.log("player 1's Turn")
@@ -75,11 +76,15 @@ function draw() {
   }
   
   for(let i=1; i<5; i++){
-    line(i*windowWidth/5, 0, i*windowWidth/5, windowHeight);
+    line(i*windowWidth/5, 0, i*windowWidth/5, windowHeight-100);
   }
   for(let i=1; i<y; i++){
-    line(0, i*windowHeight/y, windowWidth, i*windowHeight/y);
+    line(0, i*(windowHeight-100)/y, windowWidth, i*(windowHeight-100)/y);
   }
+ 
+  textSize(24);
+  textAlign(CENTER, CENTER);
+  text(player1Turn ? "Player 1's Turn" : "Player 2's Turn", windowWidth/2, windowHeight - 50);
   
    
 
@@ -127,7 +132,7 @@ function mouseClicked(){
       y = 8
     }
     const blockX = floor(windowWidth/5);
-    const blockY = floor(windowHeight/y);
+    const blockY = floor((windowHeight -100)/y);
     const arrayX = floor(mouseX/blockX);
     const arrayY = floor(mouseY/blockY);
     const arrayX2 = floor(mouseX/blockX);

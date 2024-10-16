@@ -10,9 +10,11 @@ let difficulty = 'medium';
 let Hint;
 let player1Turn = true;
 let y;
-let timer = 0;
+let timer = 60;
+let isGameEnd = false;
 let lastTime;
 let devmode = true;
+let showhint = true;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -54,9 +56,13 @@ function setup() {
 
 
 function draw() {
-   if (millis() - lastTime >= 1000) {
-    timer = timer + 1;
+   if (!isGameEnd && millis() - lastTime >= 1000) {
+    timer = timer - 1;
     lastTime = millis();
+    if (timer <= 0){
+      isGameEnd = true;
+      timer = 0;
+    }
   }
   background('white');  
   rect(0,0,windowWidth,windowHeight -100);
@@ -96,8 +102,12 @@ function draw() {
   textAlign(CENTER, CENTER);
   text(player1Turn ? "Player 1's Turn" : "Player 2's Turn", windowWidth/2, windowHeight - 70);
   
-  text("Game time : "+ timer +" seconds", windowWidth/2, windowHeight - 30);
-   
+  if (isGameEnd) {
+    text("GAME OVER", windowWidth/2, windowHeight - 30);
+  }
+  else{
+    text("Time left : "+ timer +" seconds", windowWidth/2, windowHeight - 30);
+  }
   if(devmode){
     textSize(15);
     textAlign(RIGHT, BOTTOM);
@@ -114,7 +124,9 @@ function draw() {
     text1 = board[clicked1[0]][clicked1[1]];
     hint = findHint();
     textAlign(CENTER, CENTER);
-    text("Hint : "+hint.toString(), clicked1[1]*blockX+blockX/2, clicked1[0]*blockY+blockY/2 + 50);
+    if(showhint){
+      text("Hint : "+hint.toString(), clicked1[1]*blockX+blockX/2, clicked1[0]*blockY+blockY/2 + 50);
+    }
     let gap = -10;
     for(i = 1; i<=text1 ; i++){
       line(clicked1[1]*blockX+blockX/2+gap, clicked1[0]*blockY+blockY/2-20, clicked1[1]*blockX+blockX/2+gap, clicked1[0]*blockY+blockY/2+20);
@@ -139,11 +151,13 @@ function draw() {
       gap += 7;
     }
   });
+  
+ 
 
 }
 
 function mouseClicked(){
-  if(clicked2.length == 0){
+  if(!isGameEnd && clicked2.length == 0){
     let y;
     if(difficulty == 'easy'){
       y = 2;
